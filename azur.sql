@@ -38,7 +38,8 @@ CREATE TABLE `aeroport` (
 
 INSERT INTO `aeroport` (`id`, `libelle`, `ville`) VALUES
 (1, 'Plaisance', 'Maurice'),
-(2, 'Madrid', 'Espagne');
+(2, 'Madrid', 'Espagne'),
+(3, 'Paris CDG', 'France');
 
 -- --------------------------------------------------------
 
