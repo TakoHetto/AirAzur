@@ -23,11 +23,11 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `aeroportarrivee`
+-- Structure de la table `aeroport`
 --
 
-CREATE TABLE `aeroportarrivee` (
-  `idA` int(2) NOT NULL,
+CREATE TABLE `aeroport` (
+  `id` int(2) NOT NULL,
   `libelle` varchar(50) DEFAULT NULL,
   `ville` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -36,29 +36,9 @@ CREATE TABLE `aeroportarrivee` (
 -- Contenu de la table `aeroportarrivee`
 --
 
-INSERT INTO `aeroportarrivee` (`idA`, `libelle`, `ville`) VALUES
+INSERT INTO `aeroport` (`id`, `libelle`, `ville`) VALUES
 (1, 'Plaisance', 'Maurice'),
 (2, 'Madrid', 'Espagne');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `aeroportdepart`
---
-
-CREATE TABLE `aeroportdepart` (
-  `idAD` int(2) NOT NULL,
-  `libelleAD` varchar(50) DEFAULT NULL,
-  `villeAD` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Contenu de la table `aeroportdepart`
---
-
-INSERT INTO `aeroportdepart` (`idAD`, `libelleAD`, `villeAD`) VALUES
-(1, 'Charles de Gaulle', 'Paris'),
-(2, 'Orly', 'Paris');
 
 -- --------------------------------------------------------
 
@@ -105,16 +85,10 @@ INSERT INTO `vols` (`numero`, `dateDepart`, `dateArrivee`, `prix`, `places`, `id
 --
 
 --
--- Index pour la table `aeroportarrivee`
+-- Index pour la table `aeroport`
 --
-ALTER TABLE `aeroportarrivee`
-  ADD PRIMARY KEY (`idA`);
-
---
--- Index pour la table `aeroportdepart`
---
-ALTER TABLE `aeroportdepart`
-  ADD PRIMARY KEY (`idAD`);
+ALTER TABLE `aeroport`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `reservation`
@@ -145,8 +119,8 @@ ALTER TABLE `reservation`
 -- Contraintes pour la table `vols`
 --
 ALTER TABLE `vols`
-  ADD CONSTRAINT `fk_aa` FOREIGN KEY (`idaa`) REFERENCES `aeroportarrivee` (`idA`),
-  ADD CONSTRAINT `fk_ad` FOREIGN KEY (`idad`) REFERENCES `aeroportdepart` (`idAD`);
+  ADD CONSTRAINT `fk_aa` FOREIGN KEY (`idaa`) REFERENCES `aeroport` (`id`),
+  ADD CONSTRAINT `fk_ad` FOREIGN KEY (`idad`) REFERENCES `aeroport` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

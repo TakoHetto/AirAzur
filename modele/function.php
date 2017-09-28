@@ -7,7 +7,7 @@ require ("modele/connexion.php");
  */
 function getLesVols(){
     $bdd = connect();
-    $sql = $bdd->query("SELECT * FROM vols JOIN aeroportDepart JOIN aeroportArrivee;");
+    $sql = $bdd->query("select * from vols, aeroport as a1, aeroport as a2 where idad = a1.id and idaa = a2.id ");
        
     $vols = $sql->fetchAll() ;
     $sql->closeCursor();
@@ -45,8 +45,9 @@ function validerReservation() {
 }
 
 function initPanier() {
-    if(!isset($_SESSION['reservations']))
+    if(!isset($_SESSION['reservations'])){
 	$_SESSION['reservations']= array();
+    }
 }
 
 function ajouterAuPanier($reservation) {    
