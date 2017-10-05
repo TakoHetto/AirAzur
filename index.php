@@ -31,7 +31,7 @@ switch ($action) {
             $_SESSION['nom']=$_REQUEST['nom'];
             $_SESSION['prenom']=$_REQUEST['prenom'];
             $reservation = validerReservation();
-            include("vues/v_confirmReservation.php");
+            include("vues/v_confirmerReservation.php");
             break;
 }
 

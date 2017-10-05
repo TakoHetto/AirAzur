@@ -38,6 +38,7 @@ function validerReservation() {
     $reservation['adresse'] = $_POST['adresse'];
     $reservation['mail'] = $_POST['mail'];
     $reservation['nbplaces'] = $_POST['nbvoyageurs'];
+    
     creerReservation($reservation);
     initPanier();
     ajouterAuPanier($reservation);
@@ -58,8 +59,8 @@ function ajouterAuPanier($reservation) {
 function creerReservation($reservation) {
     $bdd = connect();
     if (isset($bdd)) {
-        $sql = $bdd->query("INSERT INTO reservation (numero,nom,prenom,adresse,mail,nbVoyageurs) values
-            ('$reservation[numero]', '$reservation[nom]', '$reservation[prenom]', '$reservation[adresse]', '$reservation[mail]', '$reservation[nbplaces]')");
+        $sql = $bdd->query("INSERT INTO reservation(nom,prenom,adresse,mail,nbVoyageurs,numeroVols) values
+            ('$reservation[nom]', '$reservation[prenom]', '$reservation[adresse]', '$reservation[mail]', '$reservation[nbplaces]', '$reservation[numero]')");
     }
 }
 
