@@ -64,4 +64,20 @@ function creerReservation($reservation) {
     }
 }
 
+function getLesReservations(){
+    $lesReservations=getLesReservationsPanier();
+    return $lesReservations;
+  
+}
+
+function getLesReservationsPanier(){
+    if(isset ($_SESSION['reservations']) && count($_SESSION['reservations'])!=0){
+        return $_SESSION['reservations'];
+    }
+    else{
+        return NULL;
+    }
+    
+}
+
 ?>

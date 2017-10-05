@@ -33,6 +33,10 @@ switch ($action) {
             $reservation = validerReservation();
             include("vues/v_confirmerReservation.php");
             break;
+    case 'voirReservations' :
+        $lesReservations = getLesReservations();
+        include("vues/v_reservations.php");
+        break;
 }
 
 include("vues/v_pied.php");
