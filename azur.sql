@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
--- https://www.phpmyadmin.net/
+-- version 4.5.2
+-- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mar 26 Septembre 2017 à 22:06
--- Version du serveur :  5.7.14
--- Version de PHP :  5.6.25
+-- Généré le :  Mar 10 Octobre 2017 à 08:56
+-- Version du serveur :  5.7.9
+-- Version de PHP :  5.6.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -26,14 +26,16 @@ SET time_zone = "+00:00";
 -- Structure de la table `aeroport`
 --
 
-CREATE TABLE `aeroport` (
+DROP TABLE IF EXISTS `aeroport`;
+CREATE TABLE IF NOT EXISTS `aeroport` (
   `id` int(2) NOT NULL,
   `libelle` varchar(50) DEFAULT NULL,
-  `ville` varchar(50) DEFAULT NULL
+  `ville` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `aeroportarrivee`
+-- Contenu de la table `aeroport`
 --
 
 INSERT INTO `aeroport` (`id`, `libelle`, `ville`) VALUES
@@ -47,15 +49,31 @@ INSERT INTO `aeroport` (`id`, `libelle`, `ville`) VALUES
 -- Structure de la table `reservation`
 --
 
-CREATE TABLE `reservation` (
-  `numR` int(11) NOT NULL,
+DROP TABLE IF EXISTS `reservation`;
+CREATE TABLE IF NOT EXISTS `reservation` (
+  `numR` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(40) NOT NULL,
   `prenom` varchar(50) NOT NULL,
   `adresse` varchar(100) NOT NULL,
   `mail` varchar(100) NOT NULL,
   `nbVoyageurs` int(11) NOT NULL,
-  `numeroVols` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `numeroVols` varchar(10) NOT NULL,
+  PRIMARY KEY (`numR`),
+  KEY `fk_v` (`numeroVols`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `reservation`
+--
+
+INSERT INTO `reservation` (`numR`, `nom`, `prenom`, `adresse`, `mail`, `nbVoyageurs`, `numeroVols`) VALUES
+(1, 'Saillant', 'Elwan', '43 Rue Pixérécourt, Boite 14', 'elwansroronoa@hotmail.fr', 1, 'AIR5007'),
+(2, 'Saillant', 'Elwan', '43 Rue Pixérécourt, Boite 14', 'elwansroronoa@hotmail.fr', 1, 'AIR5007'),
+(3, 'truc', 'bidule', 'paris', 'truc@plop.fr', 2, 'AIR5108'),
+(4, 'Cousin', 'Laurine', 'bled', 'truc@machin.com', 2, 'AIR5108'),
+(5, 'Saillant', 'Elwan', 'truc', 'truc@machin.com', 2, 'AIR5108'),
+(6, 'Saillant', 'Elwan', 'truc', 'truc@machin.com', 1, 'AIR5108'),
+(7, 'Cousin', 'Laurine', '16 rue blob', 'truc@machin.com', 1, 'AIR5108');
 
 -- --------------------------------------------------------
 
@@ -63,14 +81,18 @@ CREATE TABLE `reservation` (
 -- Structure de la table `vols`
 --
 
-CREATE TABLE `vols` (
+DROP TABLE IF EXISTS `vols`;
+CREATE TABLE IF NOT EXISTS `vols` (
   `numero` varchar(10) NOT NULL,
   `dateDepart` date NOT NULL,
   `dateArrivee` date NOT NULL,
   `prix` decimal(10,0) NOT NULL,
   `places` int(11) NOT NULL,
   `idad` int(11) DEFAULT NULL,
-  `idaa` int(11) DEFAULT NULL
+  `idaa` int(11) DEFAULT NULL,
+  PRIMARY KEY (`numero`),
+  KEY `fk_ad` (`idad`),
+  KEY `fk_aa` (`idaa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -78,33 +100,21 @@ CREATE TABLE `vols` (
 --
 
 INSERT INTO `vols` (`numero`, `dateDepart`, `dateArrivee`, `prix`, `places`, `idad`, `idaa`) VALUES
-('AIR5007', '2011-12-16', '2011-12-16', '526', 311, NULL, NULL),
-('AIR5108', '2011-01-01', '2011-01-01', '250', 130, NULL, NULL);
+('AIR5007', '2011-12-16', '2011-12-16', '526', 311, 1, 2),
+('AIR5108', '2011-01-01', '2011-01-01', '250', 130, 2, 1);
 
 --
--- Index pour les tables exportées
+-- Déclencheurs `vols`
 --
-
---
--- Index pour la table `aeroport`
---
-ALTER TABLE `aeroport`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `reservation`
---
-ALTER TABLE `reservation`
-  ADD PRIMARY KEY (`numR`),
-  ADD KEY `fk_v` (`numeroVols`);
-
---
--- Index pour la table `vols`
---
-ALTER TABLE `vols`
-  ADD PRIMARY KEY (`numero`),
-  ADD KEY `fk_ad` (`idad`),
-  ADD KEY `fk_aa` (`idaa`);
+DROP TRIGGER IF EXISTS `tr_aeroport`;
+DELIMITER $$
+CREATE TRIGGER `tr_aeroport` BEFORE INSERT ON `vols` FOR EACH ROW BEGIN
+	IF new.idad = new.idaa then 
+    	SIGNAL SQLSTATE '45000';
+    END IF;
+END
+$$
+DELIMITER ;
 
 --
 -- Contraintes pour les tables exportées
