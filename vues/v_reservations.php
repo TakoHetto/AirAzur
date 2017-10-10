@@ -1,12 +1,12 @@
 <div id="contenu">
 <h1>Liste des réservations</h1>
     <table border="1">
-        <th>
-        <td>Nom</td>
-        <td>Prenom</td>
-        <td>Numero de réservation</td>
-        <td>Nombre de Voyageurs</td>
-        </th>
+        <tr>
+        <th>Nom</th>
+        <th>Prenom</th>
+        <th>Numero de réservation</th>
+        <th>Nombre de Voyageurs</th>
+        </tr>
 <?php
     if($lesReservations!=NULL){
         for($i=0;$i<=count($lesReservations)-1;$i++){ 
