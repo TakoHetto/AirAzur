@@ -24,7 +24,7 @@ switch ($action) {
             $_SESSION['numero']=$_REQUEST['numero'];
             $lesVols=getLesVols();
             include("vues/v_formReservation.php");
-           // session_destroy();
+            session_destroy();
             break;
     case 'validerReservation':
             $_SESSION['numero']=$_REQUEST['numero'];

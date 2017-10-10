@@ -80,4 +80,15 @@ function getLesReservationsPanier(){
     
 }
 
+function suppReservation(){
+    $suppReservation = $_REQUEST['numReservation'];
+    
+    $lesReservations = getLesReservations();
+    foreach ($lesReservations as $k=>$uneReservation) {
+        if ($suppReservation==$k) {
+            unset($_SESSION['reservations'][$k]);
+        }   
+    }   
+}
+
 ?>

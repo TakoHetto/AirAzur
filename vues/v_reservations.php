@@ -6,6 +6,8 @@
         <th>Prenom</th>
         <th>Numero de réservation</th>
         <th>Nombre de Voyageurs</th>
+        <th>PDF</th>
+        <th>Supprimer</th>
         </tr>
 <?php
     if($lesReservations!=NULL){
@@ -16,6 +18,8 @@
                 echo '<td>'.$lesReservations[$i]['prenom'].'</td>';
                 echo '<td>'.$lesReservations[$i]['numero'].'</td>';
                 echo '<td>'.$lesReservations[$i]['nbplaces'].'</td>';
+                echo '<td><a href="index.php?action=pdfReservation&numReservation=0" ><img src="image/pdf.png"style="width: ;width: 50px;"></a></td>';
+                echo '<td><a href="index.php?action=suppReservation"><img src="image/delete.png" style="width: ;width: 50px;"></a></td>';
             echo '<tr>';
          }
     }
