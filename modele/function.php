@@ -64,31 +64,62 @@ function creerReservation($reservation) {
     }
 }
 
-function getLesReservations(){
-    $lesReservations=getLesReservationsPanier();
-    return $lesReservations;
-  
+//function getLesReservations(){
+//    $lesReservations=getLesReservationsPanier();
+//    return $lesReservations;
+//  
+//}
+////
+//function getLesReservationsPanier(){
+//    if(isset ($_SESSION['reservations']) && count($_SESSION['reservations'])!=0){
+//        return $_SESSION['reservations'];
+//    }
+//    else{
+//        return NULL;
+//    }
+//    
+//}
+
+function getLesReservations() {
+        $lesReservations = $_SESSION['reservations'];
+        return $lesReservations;
 }
 
-function getLesReservationsPanier(){
-    if(isset ($_SESSION['reservations']) && count($_SESSION['reservations'])!=0){
-        return $_SESSION['reservations'];
-    }
-    else{
-        return NULL;
-    }
-    
+function getLaReservation() {
+    $tab = $_SESSION['reservations'];
+    $laReservation = $tab [$_REQUEST['numReservation']];
+    return $laReservation;
 }
 
-function suppReservation(){
-    $suppReservation = $_REQUEST['numReservation'];
+function creerPdfReservation($reservation) {  
+    require('fpdf/fpdf.php');
     
-    $lesReservations = getLesReservations();
-    foreach ($lesReservations as $k=>$uneReservation) {
-        if ($suppReservation==$k) {
-            unset($_SESSION['reservations'][$k]);
-        }   
-    }   
+    $numero = $_SESSION['numero'];
+    $nom = $_SESSION['nom'];
+    $prenom = $_SESSION['prenom'];
+    $adresse = $reservation['adresse'];
+    $mail = $reservation['mail'];
+    $nbplaces = $reservation['nbplaces'];
+    
+    $pdf=new FPDF();
+    $pdf->AddPage();
+    //Centre le texte
+    $pdf->SetFont('Arial', 'B', 15);
+    $pdf->MultiCell(0,'Reservation Air Azur',0,'C');
+    $pdf->Image("image/logo.jpg", 77, 10, 50, 36);
+    //$pdf->Image('../image/logo.jpg',2,2,64,48);
+    //retour Ã  la ligne
+    $pdf->Ln();
+    $pdf->SetFont('Times', 'B', 12);
+    $pdf->Cell(1,95, "Informations de votre vol $numero :");
+    $pdf->Cell(1,110, "- Client : $nom $prenom");
+    $pdf->Cell(1,120, "- Adresse : $adresse");
+    $pdf->Cell(1,130, "- Mail : $mail");
+    $pdf->Cell(1,140, "- Nombre de passagers : $nbplaces");
+    
+    ob_clean();
+    
+    $pdf->Output(); 
 }
 
 ?>
