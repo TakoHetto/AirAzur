@@ -1,5 +1,4 @@
 <?php
-
 require ("modele/connexion.php");
 
 /**
@@ -52,10 +51,18 @@ function initPanier() {
     }
 }
 
+/**
+ * 
+ * @param type $reservation
+ */
 function ajouterAuPanier($reservation) {
     $_SESSION['reservations'][] = $reservation;
 }
 
+/**
+ * 
+ * @param type $reservation
+ */
 function creerReservation($reservation) {
     $bdd = connect();
     if (isset($bdd)) {
@@ -64,33 +71,29 @@ function creerReservation($reservation) {
     }
 }
 
-//function getLesReservations(){
-//    $lesReservations=getLesReservationsPanier();
-//    return $lesReservations;
-//  
-//}
-////
-//function getLesReservationsPanier(){
-//    if(isset ($_SESSION['reservations']) && count($_SESSION['reservations'])!=0){
-//        return $_SESSION['reservations'];
-//    }
-//    else{
-//        return NULL;
-//    }
-//    
-//}
-
+/**
+ * 
+ * @return type
+ */
 function getLesReservations() {
         $lesReservations = $_SESSION['reservations'];
         return $lesReservations;
 }
 
+/**
+ * 
+ * @return type
+ */
 function getLaReservation() {
     $tab = $_SESSION['reservations'];
     $laReservation = $tab [$_REQUEST['numReservation']];
     return $laReservation;
 }
 
+/**
+ * Création du PDF
+ * @param type $reservation
+ */
 function creerPdfReservation($reservation) {  
     require('fpdf/fpdf.php');
     
@@ -106,9 +109,8 @@ function creerPdfReservation($reservation) {
     //Centre le texte
     $pdf->SetFont('Arial', 'B', 15);
     $pdf->MultiCell(0,'Reservation Air Azur',0,'C');
-    $pdf->Image("image/logo.jpg", 77, 10, 50, 36);
-    //$pdf->Image('../image/logo.jpg',2,2,64,48);
-    //retour Ã  la ligne
+    //$pdf->Image('../images/logo.jpeg',2,2,64,48);
+    //retour à la ligne
     $pdf->Ln();
     $pdf->SetFont('Times', 'B', 12);
     $pdf->Cell(1,95, "Informations de votre vol $numero :");
@@ -121,5 +123,3 @@ function creerPdfReservation($reservation) {
     
     $pdf->Output(); 
 }
-
-?>
