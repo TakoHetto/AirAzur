@@ -1,4 +1,5 @@
 <div id="contenu">
+    <div class="bloc">
 <h1>Liste des réservations</h1>
     <table border="1">
         <tr>
@@ -18,11 +19,12 @@
                 echo '<td>'.$lesReservations[$i]['prenom'].'</td>';
                 echo '<td>'.$lesReservations[$i]['numero'].'</td>';
                 echo '<td>'.$lesReservations[$i]['nbplaces'].'</td>';
-                echo '<td><a href="index.php?action=pdfReservation&numReservation='.$i.'" ><img src="image/pdf.png"style="width: ;width: 50px;"></a></td>';
-                echo '<td><a href="index.php?action=suppReservation"><img src="image/delete.png" style="width: ;width: 50px;"></a></td>';
+                echo '<td><a href="index.php?action=pdfReservation&numReservation='.$i.'" ><img src="image/pdf.png" class="icon"></a></td>';
+                echo '<td><a href="index.php?action=suppReservation"><img src="image/delete.png" class="icon"></a></td>';
             echo '<tr>';
          }
     }
   ?>
     </table>
+    </div>
 </div>
