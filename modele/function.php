@@ -127,10 +127,8 @@ function creerPdfReservation($reservation) {
 
 function suppReservation($reservation) {
     $id = $_REQUEST['numReservation'];
-    if (isset($_SESSION['reservations'][$id]) == 1) {
+   
         unset($_SESSION['reservations'][$id]);
-    } else {
-        unset($_SESSION['reservations']);
-    }
+    
     $_SESSION["reservations"] = array_values($_SESSION["reservations"]);
 }

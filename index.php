@@ -38,12 +38,7 @@ switch ($action) {
 
     case 'voirReservations' :
         $lesReservations = getLesReservations();
-        //if (isset($_SESSION['reservation'])) {
-            include("vues/v_reservations.php");
-        //} else {
-           // include("vues/v_noReservations.php");
-        //}
-                
+        include("vues/v_reservations.php");
         break;
 
     case 'pdfReservation':
@@ -53,7 +48,7 @@ switch ($action) {
         break;
 
     case 'suppReservation':
-        $reservation = getLaReservation();
+        $reservation = suppReservation();
         include("vues/v_suppReservation.php");
         break;
 }
