@@ -1,4 +1,5 @@
 <?php
+
 require ("modele/connexion.php");
 
 /**
@@ -6,15 +7,15 @@ require ("modele/connexion.php");
  * @return type : lesVols
  */
 function getLesVols() {
-    
-        $bdd = connect();
-        $sql = $bdd->query("select numero, datedepart, datearrivee, prix, places, a1.libelle as depart, a2.libelle as arrivee, a1.ville as departV, a2.ville as arriveeV from vols, aeroport as a1, aeroport as a2 where idad = a1.id and idaa = a2.id ");
 
-        $vols = $sql->fetchAll();
-        $sql->closeCursor();
+    $bdd = connect();
+    $sql = $bdd->query("select numero, datedepart, datearrivee, prix, places, a1.libelle as depart, a2.libelle as arrivee, a1.ville as departV, a2.ville as arriveeV from vols, aeroport as a1, aeroport as a2 where idad = a1.id and idaa = a2.id ");
 
-        return ($vols);
-    }
+    $vols = $sql->fetchAll();
+    $sql->closeCursor();
+
+    return ($vols);
+}
 
 /**
  * Récupère le numéro du vol, retourne ce dernier
@@ -37,7 +38,7 @@ function validerReservation() {
     $reservation['adresse'] = $_POST['adresse'];
     $reservation['mail'] = $_POST['mail'];
     $reservation['nbplaces'] = $_POST['nbvoyageurs'];
-    
+
     creerReservation($reservation);
     initPanier();
     ajouterAuPanier($reservation);
@@ -76,8 +77,8 @@ function creerReservation($reservation) {
  * @return type
  */
 function getLesReservations() {
-        $lesReservations = $_SESSION['reservations'];
-        return $lesReservations;
+    $lesReservations = $_SESSION['reservations'];
+    return $lesReservations;
 }
 
 /**
@@ -94,32 +95,42 @@ function getLaReservation() {
  * Création du PDF
  * @param type $reservation
  */
-function creerPdfReservation($reservation) {  
+function creerPdfReservation($reservation) {
     require('fpdf/fpdf.php');
-    
+
     $numero = $_SESSION['numero'];
     $nom = $_SESSION['nom'];
     $prenom = $_SESSION['prenom'];
     $adresse = $reservation['adresse'];
     $mail = $reservation['mail'];
     $nbplaces = $reservation['nbplaces'];
-    
-    $pdf=new FPDF();
+
+    $pdf = new FPDF();
     $pdf->AddPage();
     //Centre le texte
     $pdf->SetFont('Arial', 'B', 15);
-    $pdf->MultiCell(0,'Reservation Air Azur',0,'C');
-    //$pdf->Image('../images/logo.jpeg',2,2,64,48);
+    $pdf->Cell(0, 0, 'Reservation Air Azur');
+    $pdf->Image("image/logo.jpg", 60, 17, 100, 60);
     //retour à la ligne
     $pdf->Ln();
     $pdf->SetFont('Times', 'B', 12);
-    $pdf->Cell(1,95, "Informations de votre vol $numero :");
-    $pdf->Cell(1,110, "- Client : $nom $prenom");
-    $pdf->Cell(1,120, "- Adresse : $adresse");
-    $pdf->Cell(1,130, "- Mail : $mail");
-    $pdf->Cell(1,140, "- Nombre de passagers : $nbplaces");
-    
+    $pdf->Cell(1, 150, "Informations de votre vol $numero :");
+    $pdf->Cell(1, 165, "- Client : $nom $prenom");
+    $pdf->Cell(1, 175, "- Adresse : $adresse");
+    $pdf->Cell(1, 185, "- Mail : $mail");
+    $pdf->Cell(1, 195, "- Nombre de passagers : $nbplaces");
+
     ob_clean();
-    
-    $pdf->Output(); 
+
+    $pdf->Output();
+}
+
+function suppReservation($reservation) {
+    $id = $_REQUEST['numReservation'];
+    if (isset($_SESSION['reservations'][$id]) == 1) {
+        unset($_SESSION['reservations'][$id]);
+    } else {
+        unset($_SESSION['reservations']);
+    }
+    $_SESSION["reservations"] = array_values($_SESSION["reservations"]);
 }

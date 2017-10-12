@@ -20,7 +20,7 @@
                 echo '<td>'.$lesReservations[$i]['numero'].'</td>';
                 echo '<td>'.$lesReservations[$i]['nbplaces'].'</td>';
                 echo '<td><a href="index.php?action=pdfReservation&numReservation='.$i.'" ><img src="image/pdf.png" class="icon"></a></td>';
-                echo '<td><a href="index.php?action=suppReservation"><img src="image/delete.png" class="icon"></a></td>';
+                echo '<td><a href="index.php?action=suppReservation&numReservation='.$i.'"><img src="image/delete.png" class="icon"></a></td>';
             echo '<tr>';
          }
     }
