@@ -49,7 +49,6 @@ switch ($action) {
 
     case 'suppReservation':
         $reservation = suppReservation();
-        include("vues/v_suppReservation.php");
         break;
 }
 

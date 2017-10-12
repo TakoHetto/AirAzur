@@ -125,10 +125,11 @@ function creerPdfReservation($reservation) {
     $pdf->Output();
 }
 
-function suppReservation($reservation) {
+function suppReservation() {
     $id = $_REQUEST['numReservation'];
-   
-        unset($_SESSION['reservations'][$id]);
+    unset($_SESSION['reservations'][$id]);
     
     $_SESSION["reservations"] = array_values($_SESSION["reservations"]);
+    
+    header("location:http://localhost/azur/index.php?action=voirReservations");
 }
